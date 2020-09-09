@@ -412,7 +412,7 @@ def _gather_export_mods(cells):
 # match any cell containing a zero indented import from the current lib
 _re_lib_import = ReLibName(r"^from LIB_NAME\.", re.MULTILINE)
 # match any cell containing a zero indented import
-_re_import = re.compile(r"^from[ \t]|^import[ \t]", re.MULTILINE)
+_re_import = re.compile(r"^from[ \t]+\S+[ \t]+import|^import[ \t]", re.MULTILINE)
 # match any cell containing a zero indented call to notebook2script
 _re_notebook2script = re.compile(r"^notebook2script\(", re.MULTILINE)
 
@@ -566,7 +566,7 @@ def notebook2html(fname=None, force_all=False, n_workers=None, cls=HTMLExporter,
     "Convert all notebooks matching `fname` to html files"
     if fname is None:
         files = [f for f in Config().nbs_path.glob('**/*.ipynb')
-                 if not f.name.startswith('_') and not '/.' in str(f)]
+                 if not f.name.startswith('_') and not '/.' in f.as_posix()]
     else:
         p = Path(fname)
         files = list(p.parent.glob(p.name))

@@ -23,6 +23,10 @@ release: pypi
 	nbdev_conda_package --upload_user fastai
 	nbdev_bump_version
 
+conda_release:
+	nbdev_conda_package --upload_user fastai
+	nbdev_bump_version
+
 pypi: dist
 	twine upload --repository pypi dist/*
 
