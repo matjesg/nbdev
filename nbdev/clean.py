@@ -33,7 +33,7 @@ def clean_cell_output(cell):
             clean_output_data_vnd(o)
 
 # Cell
-cell_metadata_keep = ["hide_input", "tags", "colab_type", "cellView", "id"]
+cell_metadata_keep = ["hide_input", "tags", "colab_type", "cellView"]
 nb_metadata_keep   = ["kernelspec", "jekyll", "jupytext", "doc", "accelerator"]
 
 # Cell
