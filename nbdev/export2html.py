@@ -430,9 +430,10 @@ class ExecuteShowDocPreprocessor(ExecutePreprocessor):
             if check_re_multi(cell, [_re_show_doc, _re_show_doc_magic]):
                 return super().preprocess_cell(cell, resources, index)
             elif check_re_multi(cell, [_re_import, _re_lib_import.re]):
-#                 r = list(filter(_non_comment_code, cell['source'].split('\n')))
-#                 if r: print("You have import statements mixed with other code", r)
-                return super().preprocess_cell(cell, resources, index)
+                if check_re_multi(cell, [_re_export, _re_export_magic, 'show_doc', '^\s*#\s*import']):
+#                     r = list(filter(_non_comment_code, cell['source'].split('\n')))
+#                     if r: print("You have import statements mixed with other code", r)
+                    return super().preprocess_cell(cell, resources, index)
 #                 try: return super().preprocess_cell(cell, resources, index)
 #                 except: pass
         return cell, resources
@@ -528,12 +529,11 @@ def _nb2htmlfname(nb_path, dest=None):
     return Path(dest)/re_digits_first.sub('', nb_path.with_suffix('.html').name)
 
 # Cell
-def convert_nb(fname, cls=HTMLExporter, template_file=None, exporter=None, dest=None):
+def convert_nb(fname, cls=HTMLExporter, template_file=None, exporter=None, dest=None, execute=True):
     "Convert a notebook `fname` to html file in `dest_path`."
     fname = Path(fname).absolute()
-    os.chdir(fname.parent)
+#     os.chdir(fname.parent)
     nb = read_nb(fname)
-    call_cb('begin_doc_nb', nb, fname, 'html')
     meta_jekyll = get_metadata(nb['cells'])
     meta_jekyll['nb_path'] = str(fname.relative_to(Config().lib_path.parent))
     cls_lvl = find_default_level(nb['cells'])
@@ -541,20 +541,18 @@ def convert_nb(fname, cls=HTMLExporter, template_file=None, exporter=None, dest=
     nb['cells'] = compose(*process_cells,partial(add_show_docs, cls_lvl=cls_lvl))(nb['cells'])
     _func = compose(partial(copy_images, fname=fname, dest=Config().doc_path), *process_cell, treat_backticks)
     nb['cells'] = [_func(c) for c in nb['cells']]
-    nb = execute_nb(nb, mod=mod)
+    if execute: nb = execute_nb(nb, mod=mod)
     nb['cells'] = [clean_exports(c) for c in nb['cells']]
-    call_cb('after_doc_nb_preprocess', nb, fname, 'html')
     if exporter is None: exporter = nbdev_exporter(cls=cls, template_file=template_file)
     with open(_nb2htmlfname(fname, dest=dest),'w') as f:
         f.write(exporter.from_notebook_node(nb, resources=meta_jekyll)[0])
-    call_cb('after_doc_nb', fname, 'html')
 
 # Cell
-def _notebook2html(fname, cls=HTMLExporter, template_file=None, exporter=None, dest=None):
+def _notebook2html(fname, cls=HTMLExporter, template_file=None, exporter=None, dest=None, execute=True):
     time.sleep(random.random())
     print(f"converting: {fname}")
     try:
-        convert_nb(fname, cls=cls, template_file=template_file, exporter=exporter, dest=dest)
+        convert_nb(fname, cls=cls, template_file=template_file, exporter=exporter, dest=dest, execute=execute)
         return True
     except Exception as e:
         print(e)
@@ -562,7 +560,7 @@ def _notebook2html(fname, cls=HTMLExporter, template_file=None, exporter=None, d
 
 # Cell
 def notebook2html(fname=None, force_all=False, n_workers=None, cls=HTMLExporter, template_file=None,
-                  exporter=None, dest=None, pause=0):
+                  exporter=None, dest=None, pause=0, execute=True):
     "Convert all notebooks matching `fname` to html files"
     if fname is None:
         files = [f for f in Config().nbs_path.glob('**/*.ipynb')
@@ -583,7 +581,7 @@ def notebook2html(fname=None, force_all=False, n_workers=None, cls=HTMLExporter,
     if len(files)==0: print("No notebooks were modified")
     else:
         passed = parallel(_notebook2html, files, n_workers=n_workers, cls=cls,
-                          template_file=template_file, exporter=exporter, dest=dest, pause=pause)
+                          template_file=template_file, exporter=exporter, dest=dest, pause=pause, execute=execute)
         if not all(passed):
             msg = "Conversion failed on the following:\n"
             print(msg + '\n'.join([f.name for p,f in zip(passed,files) if not p]))
@@ -595,14 +593,12 @@ def convert_md(fname, dest_path, img_path='docs/images/', jekyll=True):
     if not img_path: img_path = fname.stem + '_files/'
     Path(img_path).mkdir(exist_ok=True, parents=True)
     nb = read_nb(fname)
-    call_cb('begin_doc_nb', nb, fname, 'md')
     meta_jekyll = get_metadata(nb['cells'])
     try: meta_jekyll['nb_path'] = str(fname.relative_to(Config().lib_path.parent))
     except: meta_jekyll['nb_path'] = str(fname)
     nb['cells'] = compose(*process_cells)(nb['cells'])
     nb['cells'] = [compose(partial(adapt_img_path, fname=fname, dest=dest_path, jekyll=jekyll), *process_cell)(c)
                    for c in nb['cells']]
-    call_cb('after_doc_nb_preprocess', nb, fname, 'md')
     fname = Path(fname).absolute()
     dest_name = fname.with_suffix('.md').name
     exp = nbdev_exporter(cls=MarkdownExporter, template_file='jekyll-md.tpl' if jekyll else 'md.tpl')
@@ -614,7 +610,6 @@ def convert_md(fname, dest_path, img_path='docs/images/', jekyll=True):
     if hasattr(export[1]['outputs'], 'items'):
         for n,o in export[1]['outputs'].items():
             with open(Path(dest_path)/img_path/n, 'wb') as f: f.write(o)
-    call_cb('after_doc_nb', fname, 'md')
 
 # Cell
 _re_att_ref = re.compile(r' *!\[(.*)\]\(attachment:image.png(?: "(.*)")?\)')
