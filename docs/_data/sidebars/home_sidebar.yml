@@ -13,6 +13,9 @@ entries:
       title: Tutorial
       url: tutorial.html
     - output: web,pdf
+      title: A minimal example
+      url: example.html
+    - output: web,pdf
       title: Export to modules
       url: export.html
     - output: web,pdf
@@ -31,9 +34,6 @@ entries:
       title: Fix merge conflicts
       url: merge.html
     - output: web,pdf
-      title: Conda packaging
-      url: conda.html
-    - output: web,pdf
       title: Command line functions
       url: cli.html
     - output: web,pdf
@@ -42,12 +42,6 @@ entries:
     - output: web,pdf
       title: Setting up Search
       url: search.html
-    - output: web,pdf
-      title: Magic Flags
-      url: magic_flags.html
-    - output: web,pdf
-      title: Callbacks
-      url: nbdev_callbacks.html
     output: web
     title: nbdev
   output: web

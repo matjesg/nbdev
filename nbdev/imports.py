@@ -1,58 +1,25 @@
 from fastcore.imports import *
+from fastcore.foundation import *
 from fastcore.utils import *
 from fastcore.test import *
 
-import os,re,json,glob,collections,pickle,shutil,nbformat,inspect,yaml,tempfile,enum,stat,time,random,sys
+import os,re,json,glob,collections,pickle,shutil,inspect,yaml,tempfile,enum,stat,time,random,sys
 import importlib.util
 from pdb import set_trace
 from configparser import ConfigParser
 from pathlib import Path
 from textwrap import TextWrapper
 from typing import Union,Optional
-from nbformat.sign import NotebookNotary
 from functools import partial,lru_cache
 from base64 import b64decode,b64encode
 
-def save_config_file(file, d):
-    "Write settings dict to a new config file, or overwrite the existing one."
-    config = ConfigParser()
-    config['DEFAULT'] = d
-    config.write(open(file, 'w'))
-
-def read_config_file(file):
-    config = ConfigParser()
-    config.read(file)
-    return config
-
 _defaults = {"host": "github", "doc_host": "https://%(user)s.github.io", "doc_baseurl": "/%(lib_name)s/"}
-
 
 def add_new_defaults(cfg, file):
     for k,v in _defaults.items():
         if cfg.get(k, None) is None: 
             cfg[k] = v
             save_config_file(file, cfg)
-
-
-@lru_cache(maxsize=128)
-class Config:
-    "Store the basic information for nbdev to work"
-    def __init__(self, cfg_name='settings.ini'):
-        cfg_path = Path.cwd()
-        while cfg_path != cfg_path.parent and not (cfg_path/cfg_name).exists(): cfg_path = cfg_path.parent
-        self.config_file = cfg_path/cfg_name
-        assert self.config_file.exists(), "Use `create_config` to create settings.ini for the first time"
-        self.d = read_config_file(self.config_file)['DEFAULT']
-        add_new_defaults(self.d, self.config_file)
-
-    def __getattr__(self,k):
-        if k=='d' or k not in self.d: raise AttributeError(k)
-        return self.config_file.parent/self.d[k] if k.endswith('_path') else self.d[k]
-
-    def get(self,k,default=None):   return self.d.get(k, default)
-    def __setitem__(self,k,v): self.d[k] = str(v)
-    def __contains__(self,k):  return k in self.d
-    def save(self): save_config_file(self.config_file,self.d)
 
 def create_config(host, lib_name, user, path='.', cfg_name='settings.ini', branch='master',
                git_url="https://github.com/%(user)s/%(lib_name)s/tree/%(branch)s/", custom_sidebar=False,
@@ -73,3 +40,10 @@ class ReLibName():
         self.pat = self.pat.replace('LIB_NAME', Config().lib_name)
         if self._re is None: self._re = re.compile(self.pat, self.flags)
         return self._re
+
+def parse_line(line):
+    "Convert list-like string into a list"
+    line = line.strip()
+    if line.startswith('[') and line.endswith(']'): line=line[1:-1]
+    return [s for s in re.split('[ ,]+', line) if s]
+

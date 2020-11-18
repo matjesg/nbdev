@@ -2,6 +2,40 @@
 
 <!-- do not remove -->
 
+
+## 1.1.3
+
+### New Features
+
+- Place source code below heading on #exports ([#265](https://github.com/fastai/nbdev/pull/265)), thanks to [@hamelsmu](https://github.com/hamelsmu)
+
+
+## 1.1.2
+
+### Bugs Squashed
+
+- update fastcore requirement ([#281](https://github.com/fastai/nbdev/issues/281))
+
+
+## 1.1.1
+
+### New Features
+
+- Make CLI faster by removing unneeded imports and moving CLI commands to source modules ([#271](https://github.com/fastai/nbdev/issues/271))
+- Move `Config` to fastcore ([#280](https://github.com/fastai/nbdev/issues/280))
+
+## 1.1.0
+### Breaking Changes
+
+- Remove magics ([#269](https://github.com/fastai/nbdev/issues/269))
+- Removed callbacks ([#253](https://github.com/fastai/nbdev/pull/253)), thanks to [@pete88b](https://github.com/pete88b)
+- move conda packager to `fastrelease` ([#252](https://github.com/fastai/nbdev/issues/252))
+
+### New Features
+
+- Place source code below heading on #exports ([#265](https://github.com/fastai/nbdev/pull/265)), thanks to [@hamelsmu](https://github.com/hamelsmu)
+- always skip cells labeled "skip" in test ([#257](https://github.com/fastai/nbdev/issues/257))
+
 ## 1.0.17
 
 ### Bugs Squashed
