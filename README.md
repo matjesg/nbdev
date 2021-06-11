@@ -7,7 +7,9 @@
 
 `nbdev` is a library that allows you to develop a python library in [Jupyter Notebooks](https://jupyter.org/), putting all your code, tests and documentation in one place. That is: you now have a true [literate programming](https://en.wikipedia.org/wiki/Literate_programming) environment, as envisioned by Donald Knuth back in 1983!
 
-`nbdev` makes debugging and refactor your code much easier relative to traditional programming environments. Furthermore, using nbdev promotes software engineering best practices because tests and documentation are first class citizens.  
+`nbdev` makes debugging and refactoring your code much easier relative to traditional programming environments. Furthermore, using nbdev promotes software engineering best practices because tests and documentation are first class citizens.
+
+The developers use this regularly on macOS and Linux. We have not tested it on Windows and not all features may work correctly.
 
 ## Features of Nbdev
 
@@ -35,7 +37,7 @@ In the above screenshot, we have code, tests and documentation in one context! `
 
 ![image.png](nbs/images/att_00016.png)
 
-The above illustration is a subset of the [this nbdev tutorial with a minimal example](https://nbdev.fast.ai/example.html), which uses code from [Think Python 2](https://github.com/AllenDowney/ThinkPython2) by Allen Downey.
+The above illustration is a subset of [this nbdev tutorial with a minimal example](https://nbdev.fast.ai/example.html), which uses code from [Think Python 2](https://github.com/AllenDowney/ThinkPython2) by Allen Downey.
 
 ### Explanation of annotations:
 
@@ -50,13 +52,15 @@ The above illustration is a subset of the [this nbdev tutorial with a minimal ex
 
 ## Installing
 
-nbdev is on PyPI and conda so you can just run `pip install nbdev` or `conda install -c fastai nbdev`.
+nbdev is on PyPI and conda so you can just run `pip install nbdev` or `conda install -c fastai nbdev`.  Microsoft Windows users should use `pip` instead of `conda` to install nbdev.  
 
 For an [editable install](https://stackoverflow.com/questions/35064426/when-would-the-e-editable-option-be-useful-with-pip-install), use the following:
 ```
 git clone https://github.com/fastai/nbdev
 pip install -e nbdev
 ```
+
+nbdev is tested to work on Ubuntu, Macos and Windows, for the versions tagged with the `-latest` suffix in [these docs](https://docs.github.com/en/actions/reference/specifications-for-github-hosted-runners#supported-runners-and-hardware-resources).  
 
 _Note that `nbdev` must be installed into the same python environment that you use for both your Jupyter Server and your workspace._
 
@@ -70,7 +74,7 @@ The following are helpful resources for getting started with nbdev:
 - [release notes](https://github.com/fastai/nbdev/blob/master/CHANGELOG.md).
 
 
-## If Someone Tells You That You Shouldn't Use Notebooks For Software Development
+## If Someone Tells You Should Not Use Notebooks For Software Development
 
 [Watch this video](https://youtu.be/9Q6sLbz37gk).
 
@@ -96,4 +100,4 @@ Copyright 2019 onwards, fast.ai, Inc. Licensed under the Apache License, Version
 
 Here, for instance, is how `combined_cos` is defined and documented in the `fastai` library:
 
-<img alt="Exporting from nbdev" width="700" caption="An example of a function defined in one cell (marked with the export flag) and explained, along with a visual example, in the following cells" src="nbs/images/export_example.png">
+<img alt="Exporting from nbdev" width="700" caption="An example of a function defined in one cell (marked with the export flag) and explained, along with a visual example, in the following cells" src="nbs/images/export_example.png" style="max-width: 700px">

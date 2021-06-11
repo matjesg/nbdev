@@ -4,9 +4,11 @@ __all__ = ['rm_execution_count', 'clean_output_data_vnd', 'colab_json', 'clean_c
            'nb_metadata_keep', 'clean_cell', 'clean_nb', 'nbdev_clean_nbs']
 
 # Cell
-import io,sys,json,glob
+import io,sys,json,glob,re
 from fastcore.script import call_parse,Param
+from fastcore.utils import ifnone
 from .imports import Config
+from .export import nbglob
 from pathlib import Path
 
 # Cell
@@ -31,28 +33,28 @@ def clean_cell_output(cell):
         for o in cell['outputs']:
             rm_execution_count(o)
             clean_output_data_vnd(o)
+            o.get('metadata', o).pop('tags', None)
 
 # Cell
 cell_metadata_keep = ["hide_input", "tags", "colab_type", "cellView", "id"]
 nb_metadata_keep   = ["kernelspec", "jekyll", "jupytext", "doc", "accelerator", "colab"]
 
+
 # Cell
 def clean_cell(cell, clear_all=False):
-    "Clean `cell` by removing superluous metadata or everything except the input if `clear_all`"
+    "Clean `cell` by removing superfluous metadata or everything except the input if `clear_all`"
     rm_execution_count(cell)
     if 'outputs' in cell:
         if clear_all: cell['outputs'] = []
         else:         clean_cell_output(cell)
+    if cell['source'] == ['']: cell['source'] = []
     cell['metadata'] = {} if clear_all else {k:v for k,v in cell['metadata'].items() if k in cell_metadata_keep}
 
 # Cell
 def clean_nb(nb, clear_all=False):
-    "Clean `nb` from superfulous metadata, passing `clear_all` to `clean_cell`"
+    "Clean `nb` from superfluous metadata, passing `clear_all` to `clean_cell`"
     for c in nb['cells']: clean_cell(c, clear_all=clear_all)
     nb['metadata'] = {k:v for k,v in nb['metadata'].items() if k in nb_metadata_keep }
-
-# Cell
-import io,sys,json
 
 # Cell
 def _print_output(nb):
@@ -77,13 +79,15 @@ def nbdev_clean_nbs(fname:Param("A notebook name or glob to convert", str)=None,
         clean_nb(nb, clear_all=clear_all)
         _print_output(nb)
         return
+    path = None
     if fname is None:
         try: path = Config().path("nbs_path")
         except Exception as e: path = Path.cwd()
-    files = path.glob('**/*.ipynb') if fname is None else glob.glob(fname)
+
+    files = nbglob(fname=ifnone(fname,path))
     for f in files:
         if not str(f).endswith('.ipynb'): continue
-        nb = json.load(open(f, 'r', encoding='utf-8'))
+        nb = json.loads(open(f, 'r', encoding='utf-8').read())
         clean_nb(nb, clear_all=clear_all)
         if disp: _print_output(nb)
         else:

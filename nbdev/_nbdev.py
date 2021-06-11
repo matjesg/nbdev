@@ -19,6 +19,7 @@ index = {"read_nb": "00_export.ipynb",
          "add_init": "00_export.ipynb",
          "update_version": "00_export.ipynb",
          "update_baseurl": "00_export.ipynb",
+         "nbglob": "00_export.ipynb",
          "notebook2script": "00_export.ipynb",
          "DocsTestClass": "00_export.ipynb",
          "update_lib_with_exporti_testfn": "00_export.ipynb",
@@ -108,6 +109,9 @@ index = {"read_nb": "00_export.ipynb",
          "clean_cell": "07_clean.ipynb",
          "clean_nb": "07_clean.ipynb",
          "nbdev_clean_nbs": "07_clean.ipynb",
+         "S1": "nbdev_comments.ipynb",
+         "S2": "nbdev_comments.ipynb",
+         "S3": "nbdev_comments.ipynb",
          "say_hello": "tutorial.ipynb",
          "HelloSayer": "tutorial.ipynb"}
 
@@ -119,6 +123,7 @@ modules = ["export.py",
            "merge.py",
            "cli.py",
            "clean.py",
+           "nbdev_comments.py",
            "tutorial.py"]
 
 doc_url = "https://nbdev.fast.ai/"

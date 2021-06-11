@@ -1,7 +1,12 @@
 {
   "nbdev": {
     "Overview": "/",
-    "Tutorial": "tutorial.html",
+    "": {
+    	"Tutorials": {
+    		"General Tutorial":"tutorial.html",
+    		"Google Colaboratory":"tutorial_colab.html"
+    	}
+    },
     "A minimal example": "example.html",
     "Export to modules": "export.html",
     "Synchronize and diff": "sync.html",
@@ -11,6 +16,7 @@
     "Fix merge conflicts": "merge.html",
     "Command line functions": "cli.html",
     "Clean notebooks": "clean.html",
+    "nbdev comments": "nbdev_comments.html",
     "Setting up Search": "search.html"
   }
 }

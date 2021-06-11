@@ -110,7 +110,7 @@ nb_path: "nbs/02_showdoc.ipynb"
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Links-to-documentaion">Links to documentaion<a class="anchor-link" href="#Links-to-documentaion"> </a></h3>
+<h3 id="Links-to-documentation">Links to documentation<a class="anchor-link" href="#Links-to-documentation"> </a></h3>
 </div>
 </div>
 </div>
@@ -420,7 +420,7 @@ nb_path: "nbs/02_showdoc.ipynb"
 <div class="output_markdown rendered_html output_subarea ">
 <h4 id="add_doc_links" class="doc_header"><code>add_doc_links</code><a href="https://github.com/fastai/nbdev/tree/master/nbdev/showdoc.py#L91" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>add_doc_links</code>(<strong><code>text</code></strong>, <strong><code>elt</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
-<p>Search for doc links for any item between backticks in <code>text</code> and isnter them</p>
+<p>Search for doc links for any item between backticks in <code>text</code> and insert them</p>
 
 </div>
 
@@ -547,45 +547,6 @@ nb_path: "nbs/02_showdoc.ipynb"
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">AssertionError</span>                            Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-20-d6ca6c320cfa&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span>     <span class="ansi-green-fg">def</span> __init__<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">,</span> add_doc_links<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span> <span class="ansi-green-fg">pass</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> test_eq(add_doc_links(&#39;Lets talk about `add_doc_links`&#39;), 
-<span class="ansi-green-fg">----&gt; 4</span><span class="ansi-red-fg">         &#39;Lets talk about [`add_doc_links`](/showdoc.html#add_doc_links)&#39;)
-</span><span class="ansi-green-intense-fg ansi-bold">      5</span> test_eq<span class="ansi-blue-fg">(</span>add_doc_links<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">&#39;Lets talk about `add_doc_links`&#39;</span><span class="ansi-blue-fg">,</span> T<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;Lets talk about `add_doc_links`&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">      6</span> test_eq(add_doc_links(&#39;Lets talk about `doc_link`&#39;), 
-
-<span class="ansi-green-fg">~/git/fastcore/fastcore/test.py</span> in <span class="ansi-cyan-fg">test_eq</span><span class="ansi-blue-fg">(a, b)</span>
-<span class="ansi-green-intense-fg ansi-bold">     32</span> <span class="ansi-green-fg">def</span> test_eq<span class="ansi-blue-fg">(</span>a<span class="ansi-blue-fg">,</span>b<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     33</span>     <span class="ansi-blue-fg">&#34;`test` that `a==b`&#34;</span>
-<span class="ansi-green-fg">---&gt; 34</span><span class="ansi-red-fg">     </span>test<span class="ansi-blue-fg">(</span>a<span class="ansi-blue-fg">,</span>b<span class="ansi-blue-fg">,</span>equals<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">&#39;==&#39;</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     35</span> 
-<span class="ansi-green-intense-fg ansi-bold">     36</span> <span class="ansi-red-fg"># Cell</span>
-
-<span class="ansi-green-fg">~/git/fastcore/fastcore/test.py</span> in <span class="ansi-cyan-fg">test</span><span class="ansi-blue-fg">(a, b, cmp, cname)</span>
-<span class="ansi-green-intense-fg ansi-bold">     22</span>     <span class="ansi-blue-fg">&#34;`assert` that `cmp(a,b)`; display inputs and `cname or cmp.__name__` if it fails&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">     23</span>     <span class="ansi-green-fg">if</span> cname <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span> cname<span class="ansi-blue-fg">=</span>cmp<span class="ansi-blue-fg">.</span>__name__
-<span class="ansi-green-fg">---&gt; 24</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">assert</span> cmp<span class="ansi-blue-fg">(</span>a<span class="ansi-blue-fg">,</span>b<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span><span class="ansi-blue-fg">f&#34;{cname}:\n{a}\n{b}&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">     25</span> 
-<span class="ansi-green-intense-fg ansi-bold">     26</span> <span class="ansi-red-fg"># Cell</span>
-
-<span class="ansi-red-fg">AssertionError</span>: ==:
-Lets talk about `add_doc_links`
-Lets talk about [`add_doc_links`](/showdoc.html#add_doc_links)</pre>
-</div>
-</div>
-
-</div>
-</div>
-
 </div>
     {% endraw %}
 
@@ -698,6 +659,22 @@ Lets talk about [`add_doc_links`](/showdoc.html#add_doc_links)</pre>
 </pre></div>
 
     </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p><a href="https://colab.research.google.com/github/fastai/nbdev/blob/master/nbs/02_showdoc.ipynb">Open <code>02_showdoc</code> in Colab</a></p>
+
+</div>
+
+</div>
+
 </div>
 </div>
 
@@ -818,6 +795,22 @@ Lets talk about [`add_doc_links`](/showdoc.html#add_doc_links)</pre>
 </div>
 </div>
 
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_markdown rendered_html output_subarea ">
+<p><a href="https://nbviewer.jupyter.org/github/fastai/nbdev/tree/master/nbs/00_export.ipynb#Finding-patterns">check_re (GitHub)</a></p>
+
+</div>
+
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
@@ -935,7 +928,7 @@ Lets talk about [`add_doc_links`](/showdoc.html#add_doc_links)</pre>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">sig</span> <span class="o">=</span> <span class="n">inspect</span><span class="o">.</span><span class="n">signature</span><span class="p">(</span><span class="n">notebook2script</span><span class="p">)</span>
 <span class="n">params</span> <span class="o">=</span> <span class="p">[</span><span class="n">format_param</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span><span class="p">,</span><span class="n">p</span> <span class="ow">in</span> <span class="n">sig</span><span class="o">.</span><span class="n">parameters</span><span class="o">.</span><span class="n">items</span><span class="p">()]</span>
-<span class="n">test_eq</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;**`fname`**=*`None`*&#39;</span><span class="p">,</span> <span class="s1">&#39;**`silent`**=*`False`*&#39;</span><span class="p">,</span> <span class="s1">&#39;**`to_dict`**=*`False`*&#39;</span><span class="p">])</span>
+<span class="n">test_eq</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;**`fname`**=*`None`*&#39;</span><span class="p">,</span> <span class="s1">&#39;**`silent`**=*`False`*&#39;</span><span class="p">,</span> <span class="s1">&#39;**`to_dict`**=*`False`*&#39;</span><span class="p">,</span> <span class="s1">&#39;**`bare`**=*`False`*&#39;</span><span class="p">,</span> <span class="s1">&#39;**`recursive`**=*`None`*&#39;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -1026,7 +1019,7 @@ Lets talk about [`add_doc_links`](/showdoc.html#add_doc_links)</pre>
 
 
 <div class="output_markdown rendered_html output_subarea ">
-<h4 id="notebook2script" class="doc_header"><code>notebook2script</code><a href="https://github.com/fastai/nbdev/tree/master/nbdev/export.py#L401" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>notebook2script</code>(<strong><code>fname</code></strong>=<em><code>None</code></em>, <strong><code>silent</code></strong>=<em><code>False</code></em>, <strong><code>to_dict</code></strong>=<em><code>False</code></em>)</p>
+<h4 id="notebook2script" class="doc_header"><code>notebook2script</code><a href="https://github.com/fastai/nbdev/tree/master/nbdev/export.py#L412" class="source_link" style="float:right">[source]</a></h4><blockquote><p><code>notebook2script</code>(<strong><code>fname</code></strong>=<em><code>None</code></em>, <strong><code>silent</code></strong>=<em><code>False</code></em>, <strong><code>to_dict</code></strong>=<em><code>False</code></em>, <strong><code>bare</code></strong>=<em><code>False</code></em>, <strong><code>recursive</code></strong>=<em><code>None</code></em>)</p>
 </blockquote>
 <p>Convert notebooks matching <code>fname</code> to modules</p>
 
